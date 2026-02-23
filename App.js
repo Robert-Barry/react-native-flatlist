@@ -1,12 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { ContextProvider, useContextData } from './components/Context';
+
+
+const Item = ({ data }) => {
+  return (
+    <View style={styles.item}>
+      <Text style={styles.itemTitle}>{data.title}</Text>
+      <Text>{data.description}</Text>
+    </View>
+  );
+};
+
+const ListScreen = () => {
+  const data = useContextData();
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Test List</Text>
+      <FlatList
+        data={data}
+        renderItem={({ item }) => <Item data={item} />}
+        keyExtractor={(item) => item.id}
+      />
+    </View>
+  );
+}
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ContextProvider>
+      <ListScreen />
+    </ContextProvider>
   );
 }
 
@@ -14,7 +37,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItem: 'left',
+    padding: 10,
+    paddingTop: 60,
+  },
+  item: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  itemTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
   },
 });
