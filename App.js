@@ -6,7 +6,7 @@ import {
   FlatList,
   Pressable,
 } from 'react-native';
-import { ContextProvider, useContextData } from './components/Context';
+import data from './data/data.json';
 
 const Item = ({ data, onPress }) => {
   return (
@@ -20,13 +20,12 @@ const Item = ({ data, onPress }) => {
 };
 
 const ListScreen = ({ onPress }) => {
-  const data = useContextData();
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Test List</Text>
       <FlatList
-        data={data}
+        data={data.data}
         renderItem={({ item }) => <Item data={item} onPress={onPress} />}
         keyExtractor={(item) => item.id}
       />
@@ -57,12 +56,10 @@ export default function App() {
   };
 
   return (
-    <ContextProvider>
-      <View style={{ flex: 1 }}>
-        <Header item={selectedItem} />
-        <ListScreen onPress={handleItemPress} />
-      </View>
-    </ContextProvider>
+    <View style={{ flex: 1 }}>
+      <Header item={selectedItem} />
+      <ListScreen onPress={handleItemPress} />
+    </View>
   );
 }
 
