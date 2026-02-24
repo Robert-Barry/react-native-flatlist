@@ -1,6 +1,6 @@
-# React Native Flat List Test App
+# React Native Optimized Flat List
 
-A simple React Native app created for the purpose of testing funcitonality for a larger app.
+A React Native app created for the purpose of creating functionality for a larger app.
 
 - Imports a JSON file of data.
 - Uses the Conext API to serve the JSON data.
