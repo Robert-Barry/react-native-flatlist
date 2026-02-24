@@ -8,10 +8,14 @@ import {
 } from 'react-native';
 import data from './data/data.json';
 
-const Item = ({ data, onPress }) => {
+const Separator = () => <View style={styles.separator} />
+
+const Item = ({ data, onPress, selected }) => {
+
+
   return (
     <Pressable onPress={() => onPress(data)}>
-      <View style={styles.item}>
+      <View style={[styles.item, selected && styles.itemSelected]}>
         <Text style={styles.itemTitle}>{data.title}</Text>
         <Text>{data.description}</Text>
       </View>
@@ -19,15 +23,16 @@ const Item = ({ data, onPress }) => {
   );
 };
 
-const ListScreen = ({ onPress }) => {
+const ListScreen = ({ onPress, selectedId }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Test List</Text>
+      <Text style={styles.title}>Item List</Text>
       <FlatList
         data={data.data}
-        renderItem={({ item }) => <Item data={item} onPress={onPress} />}
+        renderItem={({ item }) => <Item data={item} onPress={onPress} selected={item.id === selectedId} />}
         keyExtractor={(item) => item.id}
+        ItemSeparatorComponent={Separator}
       />
     </View>
   );
@@ -58,7 +63,7 @@ export default function App() {
   return (
     <View style={{ flex: 1 }}>
       <Header item={selectedItem} />
-      <ListScreen onPress={handleItemPress} />
+      <ListScreen onPress={handleItemPress} selectedId={selectedItem?.id} />
     </View>
   );
 }
@@ -73,8 +78,6 @@ const styles = StyleSheet.create({
   },
   item: {
     padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
     width: '100%',
   },
   title: {
@@ -103,4 +106,11 @@ const styles = StyleSheet.create({
     marginTop: 4,
     textAlign: 'center'
   },
+  separator: {
+    borderBottomWidth: 1,
+    borderColor: '#b0b0b0'
+  },
+  itemSelected: {
+    backgroundColor: '#e0e0e0'
+  }
 });
